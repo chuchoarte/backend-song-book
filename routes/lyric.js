@@ -24,6 +24,7 @@ router.get('/artist/:artist/title/:title', async (req, res) => {
     }
     res.json({
         ok: true,
+        'full_title': data.result.full_title,
         'lyrics': req.params.lyrics,
     });
 });
