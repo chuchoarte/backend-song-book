@@ -21,19 +21,16 @@ router.get('/artist/:artist/title/:title', async (req, res) => {
             let {
                 data: { response: { song } }
             } = await axios.get(url + item.result.id, { headers });
-            return await ExtractLyrics(song.url);
+            return [item.result.full_title, await ExtractLyrics(song.url)];
         }
     }));
 
-    let getLyricFiltered = getLyrics.filter(item => {
-        return item !== undefined;
-    });
-
-    const lyrics = getLyricFiltered[0];
+    const full_title = getLyrics[0][0];
+    const lyrics = getLyrics[0][1];
 
     res.json({
         ok: true,
-        'full_title': data.result.full_title,
+        'full_title': full_title,
         'lyrics': lyrics,
     });
 });
